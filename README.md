@@ -20,3 +20,23 @@ sh docker_init_database/create-image-mysql.sh
 mysql -h 127.0.0.1 -P 3306 -u root -pabcd1235ojpibetbenoinwef
 ```
 
+假如无法登陆，执行以下代码检查容器是否已启动（Mac下有时候会自动退出，Linux通常不会）
+
+```
+docker container ps -a
+```
+
+如果 ``STATUS`` 列显示：``Exited (1) 44 seconds ago ``，说明容器停止运行了，启动它即可。
+
+```
+docker container start mysql-article-tags
+```
+
+<b>其他：</b>
+
+如果安装失败，或者遇见问题，可以运行以下命令重置
+
+```
+sh docker_init_database/reset.sh
+```
+
