@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # 如果需要使用其他镜像，记得自行修改脚本
 # 修改映射到本机的端口也一样
+# 需要在 docker_init_database 目录下执行
 
 appfilename="app"
 mysqldatafilename="mysqldata"
