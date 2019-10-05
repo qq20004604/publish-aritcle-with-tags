@@ -1,5 +1,7 @@
 -- 创建数据库
 CREATE DATABASE `article_system` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
+-- 切换数据库
+USE article_system;
 -- 创建用户表
 CREATE TABLE `user` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
