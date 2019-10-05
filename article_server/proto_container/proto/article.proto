@@ -1,0 +1,68 @@
+// 显示声明，以表示使用proto3的语法
+syntax = "proto3";
+
+// 函数
+service ArticleService {
+    // 新增文章
+    rpc AddArticle (AddArticleRequest) returns (AddArticleReply) {
+    }
+    // 查询文章
+    rpc SelectArticle (SelectArticleRequest) returns (SelectArticleReply) {
+    }
+    // 更新文章
+    rpc UpdateArticle (UpdateArticleRequest) returns (UpdateArticleReply) {
+    }
+}
+
+// 新增文章（请求）
+message AddArticleRequest {
+    string article = 1;
+}
+
+// 新增文章（返回）
+message AddArticleReply {
+    int32 code = 1;
+    string msg = 2;
+    AddArticleReplyData data = 3;
+}
+
+// 新增文章（返回，data 的值）
+message AddArticleReplyData {
+    int64 id = 1;
+}
+
+// 查找文章（请求）
+message SelectArticleRequest {
+    int64 id = 1;
+}
+
+// 查找文章（返回）
+message SelectArticleReply {
+    int32 code = 1;
+    string msg = 2;
+    SelectArticleReplyData data = 3;
+}
+
+// 查找文章（返回，data 值）
+message SelectArticleReplyData {
+    int64 id = 1;
+    string article = 2;
+}
+
+// 更新文章（请求）
+message UpdateArticleRequest {
+    int64 id = 1;
+    string article = 2;
+}
+
+// 更新文章（返回）
+message UpdateArticleReply {
+    int32 code = 1;
+    string msg = 2;
+    UpdateArticleReplyData data = 3;
+}
+
+// 更新文章（返回）
+message UpdateArticleReplyData {
+    int64 id = 1;
+}
