@@ -13,6 +13,23 @@ HOST = 'localhost'
 PORT = 55002
 
 
+# 生成成功的返回信息
+def success_return(data=None):
+    return {
+        'code': 200,
+        'msg': 'success',
+        'data': data
+    }
+
+
+# 生成失败的返回信息
+def error_return(msg):
+    return {
+        'code': 0,
+        'msg': msg
+    }
+
+
 def error_log(msg):
     with open('./rpc_err.log', 'a')as f:
         f.write('%s||%s||%s\n' % (
@@ -31,6 +48,7 @@ class GRPCClient(object):
         # 调用 rpc 服务，GreeterStub 这个类名是固定生成的，参照 helloworld_pb2_grpc.py
         self.stub = article_pb2_grpc.ArticleServiceStub(channel)
 
+    # 新增文章
     def add_article(self, article):
         is_error = False
         error_msg = ''
@@ -50,34 +68,71 @@ class GRPCClient(object):
             is_error = True
             error_msg = e
             error_log(e.details())
-            return {
-                'code': 0,
-                'msg': 'send error',
-                'data': None
-            }
+            return error_return('send error')
         finally:
             # 组织返回信息
             if is_error:
-                return {
-                    'code': 0,
-                    'msg': error_msg,
-                    'data': None
-                }
+                return error_return(error_msg)
             else:
                 if response.code is 200:
-                    return {
-                        'code': 200,
-                        'msg': 'success',
-                        'data': {
-                            'id': response.data.id
-                        }
-                    }
+                    return success_return({
+                        'id': response.data.id
+                    })
                 else:
-                    return {
-                        'code': 0,
-                        'msg': response.msg,
-                        'data': None
-                    }
+                    return error_return(response.msg)
+
+    # 查找文章
+    def select_article(self, id):
+        is_error = False
+        error_msg = ''
+        try:
+            # s 是一个基于 dict 的实例
+            s = article_pb2.SelectArticleRequest(id=id)
+            response = self.stub.SelectArticle(s)
+        except BaseException as e:
+            # 这个错误信息可能是服务器连接失败
+            is_error = True
+            error_msg = e
+            error_log(e.details())
+            return error_return('send error')
+        finally:
+            # 组织返回信息
+            if is_error:
+                return error_return(error_msg)
+            else:
+                if response.code is 200:
+                    return success_return({
+                        'id': response.data.id,
+                        'article': response.dat.article
+                    })
+                else:
+                    return error_return(response.msg)
+
+    # 更新文章
+    def update_article(self, id, article):
+        is_error = False
+        error_msg = ''
+        try:
+            # s 是一个基于 dict 的实例
+            s = article_pb2.UpdateArticleRequest(id=id, article=article)
+            response = self.stub.UpdateArticle(s)
+        except BaseException as e:
+            # 这个错误信息可能是服务器连接失败
+            is_error = True
+            error_msg = e
+            error_log(e.details())
+            return error_return('send error')
+        finally:
+            # 组织返回信息
+            if is_error:
+                return error_return(error_msg)
+            else:
+                if response.code is 200:
+                    return success_return({
+                        'id': response.data.id
+                    })
+                else:
+                    return error_return(response.msg)
 
 
 # 测试和示例代码
