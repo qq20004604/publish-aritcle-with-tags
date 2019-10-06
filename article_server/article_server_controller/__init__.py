@@ -57,7 +57,8 @@ class ArticleController:
                 else:
                     # 成功查到，返回内容
                     return success_return({
-                        'content': result
+                        'id': result[0][0],
+                        'article': result[0][1]
                     })
 
     # 增
