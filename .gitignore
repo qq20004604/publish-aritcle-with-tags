@@ -4,3 +4,4 @@ article-tag*
 article_server/config/__pycache__/
 article_server/libs/mysql_lingling/__pycache__/
 article_server/libs/printcolor_lingling/__pycache__/
+.idea*
