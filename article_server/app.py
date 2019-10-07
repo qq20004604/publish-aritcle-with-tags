@@ -21,7 +21,7 @@ MAX_WORKERS = 10
 class ArticleService(article_pb2_grpc.ArticleServiceServicer):
     # 新增文章
     def AddArticle(self, request, context):
-        print('---- client AddArticle:\n%s' % request.article)
+        print('---- client AddArticle:\narticle: %s' % request.article)
         # 先拿到数据
         article_content = request.article
         # 创建实例
@@ -34,24 +34,25 @@ class ArticleService(article_pb2_grpc.ArticleServiceServicer):
 
     # 查找文章
     def SelectArticle(self, request, context):
-        print('---- client AddArticle:\n%s' % request.article)
+        print('---- client SelectArticle:\nid: %s' % request.id)
         # 创建实例
         ac = ArticleController()
         # 调用示例方法，查找符合的数据
         result = ac.select(id=request.id)
+        print('---- client SelectArticle result: ----\nresult: %s' % result)
         # 返回信息给 client 端
         return article_pb2.SelectArticleReply(**result)
 
     # 更新文章
     def UpdateArticle(self, request, context):
-        print('---- client AddArticle:\n%s' % request.article)
+        print('---- client UpdateArticle:\nid: %s\n article: %s' % (request.id, request.article))
         # 先拿到数据
         article_content = request.article
         id = request.id
         # 创建实例
         ac = ArticleController()
         # 调用示例方法，将文章插入
-        result = ac.update(content=article_content)
+        result = ac.update(id=id, content=article_content)
         # 返回信息给 client 端
         return article_pb2.UpdateArticleReply(**result)
 
@@ -76,6 +77,7 @@ class ArticleServer(object):
                 time.sleep(60 * 60 * 24)  # one day in seconds
         except KeyboardInterrupt:
             # 如果用户手动中断（比如 ctrl + c？）
+            print('server exit!')
             server.stop(0)
 
 
