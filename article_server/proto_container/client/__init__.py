@@ -103,7 +103,7 @@ class GRPCClient(object):
                 if response.code is 200:
                     return success_return({
                         'id': response.data.id,
-                        'article': response.dat.article
+                        'article': response.data.article
                     })
                 else:
                     return error_return(response.msg)
@@ -139,7 +139,24 @@ class GRPCClient(object):
 if __name__ == '__main__':
     client = GRPCClient()
     result_add = client.add_article("abcdefg")
+    print('\n::::client.add_article("abcdefg")::::')
     print(result_add)
+
+    result_select = client.select_article(id=1)
+    print('\n::::client.select_article(id=1)::::')
+    print(result_select)
+
+    result_select2 = client.select_article(2)
+    print('\n::::client.select_article(id=2)::::')
+    print(result_select2)
+
+    result_update = client.update_article(2, 'grgerer')
+    print("\n::::client.update_article(2, 'testtttt')::::")
+    print(result_update)
+
+    result_select3 = client.select_article(2)
+    print('\n::::client.select_article(id=2)::::')
+    print(result_select3)
 
     # res2 = client.send_people('张三', 20)
     # if res2['code'] is 200:

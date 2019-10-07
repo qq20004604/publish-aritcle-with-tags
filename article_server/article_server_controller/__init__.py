@@ -81,7 +81,7 @@ class ArticleController:
                 })
 
     # 改
-    def update(self, content, id):
+    def update(self, id, content):
         verify_result = self.verify_content(content)
         if len(verify_result) > 0:
             return error_return(verify_result)
@@ -105,8 +105,11 @@ class ArticleController:
                         return error_return("The article which id = [%s] doesn't exist!" % id)
                     else:
                         # 说明存在但不需要更新，直接返回即可（认为更新成功）
-                        return success_return()
+                        return success_return({
+                            'id': search_isexist[0][0]
+                        })
                 else:
+                    # 其他情况下，result 是触发更新的行数，一般是 1（因为只更新了一行）
                     return success_return()
 
     # 验证 content
@@ -124,4 +127,4 @@ if __name__ == '__main__':
     ac = ArticleController()
     print(ac.insert(content='abcdefg'))
     ac.select(id=1)
-    print(ac.update(content='eeeee', id=1))
+    print(ac.update(id=1, content='eeeee'))
