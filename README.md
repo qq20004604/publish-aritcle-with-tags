@@ -20,7 +20,7 @@ sh docker_init_database/create-image-mysql.sh
 mysql -h 127.0.0.1 -P 3306 -u root -pabcd1235ojpibetbenoinwef
 ```
 
-假如无法登陆，执行以下代码检查容器是否已启动（Mac下有时候会自动退出，Linux通常不会）
+假如无法登陆，执行以下代码检查容器是否已启动（Mac下大部分情况下会自动退出，Linux通常不会）
 
 ```
 docker container ps -a
@@ -40,3 +40,20 @@ docker container start mysql-article-tags
 sh docker_init_database/reset.sh
 ```
 
+### 2、版本更新说明
+
+> 0.0.1 (done)
+
+1. 内容继承于另外一个框架，东西略，后续会补充；
+2. 封装了专门的 article_server 服务，使用 RPC 来获取数据；
+3. 入口 ``article_server/app.py``；
+4. client 端测试 ``article_server/proto_container/client/__init__.py``
+5. 使用 Google Protocol Buffer
+6. proto 文件：``article_server/proto_container/proto/article.proto``
+7. 根据 proto 文件生成对应的文件的脚本：``article_server/proto_container/proto/init_proto.sh``
+8. RPC 接口：``article_server/readme.md``
+9. RPC 使用说明：``article_server/proto_container/proto``
+
+> 0.0.2 （plan)
+
+1. 将 article_server 封装为 docker 容器来对外提供服务
