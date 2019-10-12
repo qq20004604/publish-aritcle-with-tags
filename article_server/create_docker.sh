@@ -20,7 +20,7 @@ echo "【3】查看镜像是否生成成功"
 docker images
 
 echo "【4】生成容器"
-docker container run --name "$containername" -p "$exportport:$imageport" -d "$image"
+docker container run --name "$containername" --link=mysql-article-tags:db -p "$exportport:$imageport" -dit "$image" /bin/bash
 
 echo "【5】查看容器是否生成成功"
 docker container ps -a
