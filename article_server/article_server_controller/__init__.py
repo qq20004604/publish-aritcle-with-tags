@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from mysql_lingling import MySQLTool
-from article_server.config.mysql_options import mysql_config
+from config.mysql_options import mysql_config
 
 
 # 生成成功的返回信息

@@ -56,4 +56,6 @@ sh docker_init_database/reset.sh
 
 > 0.0.2 （plan)
 
-1. 将 article_server 封装为 docker 容器来对外提供服务
+1. 将 article_server 封装为 docker 容器。初始化容器执行 ``article_server/create_docker.sh`` 这个脚本即可
+2. 如果出现问题，需要重置容器，执行 ``article_server/reset.sh`` 这个脚本；
+3. 依赖于 mysql 容器，mysql 容器初始化执行 ``docker_init_database/create-image-mysql.sh`` 这个脚本

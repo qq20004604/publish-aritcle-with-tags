@@ -1,5 +1,4 @@
 /docker_init_database/mysqldata/
-/article_server/log*
 article-tag*
 article_server/config/__pycache__/
 article_server/libs/mysql_lingling/__pycache__/

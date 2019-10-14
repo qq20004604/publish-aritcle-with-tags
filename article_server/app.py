@@ -1,20 +1,34 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-
-from concurrent import futures
-import time
-import grpc
 import sys
 
 # 必须先设置一下环境路径
 sys.path.append("proto_container/proto")
+sys.path.append("config")
 
+import argparse
+from concurrent import futures
+import time
+import grpc
 import article_pb2, article_pb2_grpc
 from article_server_controller import ArticleController
 
-PORT = 55002
-MAX_WORKERS = 10
+DEFAULT_PORT = 55002
+DEFAULT_MAX_WORKERS = 10
+
+# 获取环境配置的端口
+parser = argparse.ArgumentParser()
+# 默认使用 55002，否则使用传入的
+parser.add_argument('--port', '-p', default=DEFAULT_PORT)
+# 默认最大工作线程（应该是线程吧？）是 10
+parser.add_argument('--maxworkers', '-w', default=DEFAULT_MAX_WORKERS)
+# 解析参数
+args = parser.parse_args()
+# 端口
+PORT = args.port
+# 最大工作线程
+MAX_WORKERS = args.maxworkers
 
 
 # 实现 proto 文件中定义的 ArticleService，注意继承的 class，需要是有同名函数的那个
