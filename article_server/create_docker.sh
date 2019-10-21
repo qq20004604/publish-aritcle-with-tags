@@ -8,6 +8,13 @@ image="$imagename:$imageversion"
 containername="article_server"
 imageport=55002
 exportport=55002
+dockernetwork="base-mysql-database-network"
+logfilename='container_log'
+
+# 建立持久化文件夹
+if [ ! -d $logfilename ]; then
+  mkdir "$logfilename"
+fi
 
 echo "【1】下载 Python:3 版本 image"
 docker pull python:3
@@ -19,8 +26,11 @@ docker image build -t "$image" .
 echo "【3】查看镜像是否生成成功"
 docker images
 
-echo "【4】生成容器"
-docker container run --name "$containername" --link=mysql-article-tags:db -p "$exportport:$imageport" -d "$image"
+echo "【4】生成容器，并和mysql容器link到一起"
+docker container run --name "$containername" -v "$pwd/$logfilename":/usr/src/app/log --net="$dockernetwork" -p "$exportport:$imageport" -d "$image"
+#docker container run --name "$containername" --link=mysql-article-tags:db -p "$exportport:$imageport" -d "$image"
+# 这个是加入docker网络，是另外一种方式，更方便
+# docker container run --name article_server --net=base-mysql-database-network -p 55002:55002 -d article_server:0.0.1
 
 echo "【5】查看容器是否生成成功"
 docker container ps -a

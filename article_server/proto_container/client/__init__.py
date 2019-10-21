@@ -9,7 +9,8 @@ sys.path.append("../proto")
 
 import article_pb2, article_pb2_grpc
 
-HOST = '127.0.0.1'
+# HOST = '127.0.0.1'
+HOST = '119.3.214.234'
 PORT = 55002
 
 
